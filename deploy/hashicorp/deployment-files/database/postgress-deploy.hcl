@@ -13,20 +13,24 @@ job "db-cluster" {
         image   = "postgres"
       }
 
+      resources {
+        cpu    = 100
+        memory = 100
+      }
+
       env {
         POSTGRES_DB = "demo_prod"
         POSTGRES_USER = "default"
         POSTGRES_PASSWORD = "pass"
       }
-
-      resources {
-        cpu    = 100
-        memory = 100
-      }
     }
 
     network {
       mode = "bridge"
+      port "http" {
+        static = 5432
+        to     = 5432
+      }
     }
 
     service {
@@ -38,6 +42,7 @@ job "db-cluster" {
       }
     }
   }
+
 
   group "mesh-gateway" {
     count = 1
