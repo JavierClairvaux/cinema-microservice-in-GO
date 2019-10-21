@@ -7,9 +7,9 @@ Vagrant.configure("2") do |config|
 
   config.vm.box = "ubuntu/xenial64"
   config.vm.provision "shell", path: "provision/scripts/install.sh", privileged: false
-  
+
   ['dc1', 'dc2'].each do |dc|
-  
+
     ip_prefix = dc == 'dc1' ? '172.20.20.11' : '172.20.20.31'
 
     config.vm.define "#{dc}-consul-server" do |cs|
@@ -24,6 +24,7 @@ Vagrant.configure("2") do |config|
         cs.vm.network :forwarded_port, guest: 27017, guest_ip:"10.0.2.15", host: 27017, host_ip:"0.0.0.0"
         cs.vm.network :forwarded_port, guest: 27018, guest_ip:"10.0.2.15", host: 27018, host_ip:"0.0.0.0"
         cs.vm.network :forwarded_port, guest: 27019, guest_ip:"10.0.2.15", host: 27019, host_ip:"0.0.0.0"
+        cs.vm.network :forwarded_port, guest: 5432, guest_ip:"10.0.2.15", host: 5432, host_ip:"0.0.0.0"
         # Mesh GW
         cs.vm.network :forwarded_port, guest: 8433,  guest_ip:"10.0.2.15", host: 8433,  host_ip:"0.0.0.0"
         # jaeger
@@ -33,11 +34,11 @@ Vagrant.configure("2") do |config|
         # Mesh GW
         cs.vm.network :forwarded_port, guest: 9433,  guest_ip:"10.0.2.15", host: 9433,  host_ip:"0.0.0.0"
       end
-      
+
       cs.vm.provision "shell", privileged: false, inline: <<-EOF
         echo "Vagrant Box provisioned!"
       EOF
-      
+
     end
 
   end
