@@ -24,12 +24,16 @@ job "todo-app"{
 
       resources {
         cpu    = 100
-        memory = 100
+        memory = 300
       }
 
     }
     network {
       mode = "bridge"
+      port "http" {
+        static = 4000
+        to     = 4000
+      }
     }
 
     service  {
