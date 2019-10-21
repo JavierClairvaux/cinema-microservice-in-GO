@@ -10,7 +10,7 @@ job "todo-app"{
     task "todoapp1" {
       driver = "docker"
       config {
-        image = "thetonymaster/todo-app"
+        image = "javier1/todo-app"
       }
 
       env {
