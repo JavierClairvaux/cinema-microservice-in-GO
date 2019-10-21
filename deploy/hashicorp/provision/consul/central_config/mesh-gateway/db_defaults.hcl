@@ -1,7 +1,7 @@
 Kind = "service-defaults"
 Name = "postgressdb1"
 
-Protocol = "http"
+Protocol = "tcp"
 
 MeshGateway = {
   mode = "local"
